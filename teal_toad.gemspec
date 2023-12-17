@@ -13,7 +13,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Marco Donna']
   s.email       = 'm.donna03@gmail.com'
 
-  s.files = Dir['README.md', 'Gemfile', 'lib/**/*.rb']
+  s.files = Dir['README.md', 'LICENSE', 'Gemfile', 'lib/**/*.rb', 'ext/**/*.rb', 'ext/**/*.cpp', 'ext/**/*.h']
+  s.extensions << 'ext/teal_toad/extconf.rb'
 
   s.homepage    = 'https://github.com/MarcoDonna/TealToad'
   s.metadata    = { 'source_code_uri' => 'https://github.com/MarcoDonna/TealToad',

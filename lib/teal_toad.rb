@@ -2,6 +2,7 @@
 
 require 'teal_toad/version'
 
+require 'teal_toad/teal_toad'
 require 'teal_toad/series'
 
 ##

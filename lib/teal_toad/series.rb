@@ -26,5 +26,7 @@ module TealToad
     end
 
     alias freq frequency
+    alias average mean
+    alias avg mean
   end
 end

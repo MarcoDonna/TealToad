@@ -7,7 +7,7 @@ module TealToad
   #
   #   series = Series[1, 2, 3, 4, 2, 3]
   #   series.freq # => { 1=>1, 2=>2, 3=>2, 4=>1}
-  #   series.mean # =>
+  #   series.mean # => 2.5
   #
   class Series < Array
     ##
@@ -25,8 +25,26 @@ module TealToad
       tally
     end
 
+    ##
+    # Returns the probability of the given value in the Series.
+    # If smoothing_factor is passed, the probability returned is computed using Laplace smoothing.
+    #
+    # @example
+    #   series = Series[1, 2, 3, 4, 2, 3]
+    #   series.probability(3) # => 2/6
+    #
+    # @params value [BasicObject] Finding probability of this value.
+    # @params smoothing_factor [Numeric] Smoothing factor used in Laplace smoothing.
+    #
+    # @return [Rational] The computed probability
+    #
+    def probability(value, smoothing_factor: 0)
+      Rational(count(value) + smoothing_factor, size + (uniq.size * smoothing_factor))
+    end
+
     alias freq frequency
     alias average mean
     alias avg mean
+    alias prob probability
   end
 end

@@ -11,6 +11,37 @@ module TealToad
   #
   class Series < Array
     ##
+    # Returns the average of the Series.
+    #
+    # @return [Rational] The average value.
+    #
+    def mean
+      Rational(sum, size)
+    end
+
+    ##
+    # Returns the median of the Series.
+    #
+    # @return [Rational] The median of the Series.
+    #
+    def median
+      sorted = sort
+      len = size
+      Rational(sorted[(len - 1) / 2] + sorted[len / 2], 2)
+    end
+
+    ##
+    # Returns the mode of the Series
+    #
+    # @return [Series] The list of modes.
+    #
+    def mode
+      frequencies_list = frequency
+      max_freq = frequencies_list.values.max
+      Series[*frequencies_list.select { |_, v| v == max_freq }.keys]
+    end
+
+    ##
     # Counts the occurrences of items in the Series.
     #
     # @example
@@ -32,9 +63,11 @@ module TealToad
     # @example
     #   series = Series[1, 2, 3, 4, 2, 3]
     #   series.probability(3) # => 2/6
+    #   series.probability(3, 1) # => 3/10
+    #   series.probability(-2, 1) # => 1/10
     #
-    # @params value [BasicObject] Finding probability of this value.
-    # @params smoothing_factor [Numeric] Smoothing factor used in Laplace smoothing.
+    # @param value [BasicObject] Finding probability of this value.
+    # @param smoothing_factor [Numeric] Smoothing factor used in Laplace smoothing.
     #
     # @return [Rational] The computed probability
     #

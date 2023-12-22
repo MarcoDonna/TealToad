@@ -17,6 +17,18 @@ describe TealToad::Series do
     end
   end
 
+  describe '#median' do
+    it 'returns the median of the Series' do
+      expect(series.median).to eq(2.5)
+    end
+  end
+
+  describe '#mode' do
+    it 'returns the mode of the Series' do
+      expect(series.mode).to eq([2, 3])
+    end
+  end
+
   describe '#probability' do
     it 'returns the probability of the given value in the Series' do
       expect(series.probability(3)).to eq(Rational(2, 6))

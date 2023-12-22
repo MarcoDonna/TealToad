@@ -5,9 +5,9 @@ require 'teal_toad'
 describe TealToad::Series do
   subject(:series) { described_class[1, 2, 3, 4, 2, 3] }
 
-  describe '#freq' do
+  describe '#frequency' do
     it 'returns an hash where the keys are the distinct items in the Series and the values are their count' do
-      expect(series.freq).to eq({ 1 => 1, 2 => 2, 3 => 2, 4 => 1 })
+      expect(series.frequency).to eq({ 1 => 1, 2 => 2, 3 => 2, 4 => 1 })
     end
   end
 
@@ -40,6 +40,12 @@ describe TealToad::Series do
 
     it 'returns the laplace smoothed probability even when the given item doesn\t appear in the series' do
       expect(series.probability(-1, smoothing_factor: 1)).to eq(Rational(1, 10))
+    end
+  end
+
+  describe '#entropy' do
+    it 'returns Shannon entropy of the Series' do
+      expect(series.entropy).to eq(1.9182958340544893)
     end
   end
 end

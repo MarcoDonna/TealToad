@@ -6,7 +6,7 @@ module TealToad
   # Series extend Array adding extra utility and statistics methods.
   #
   #   series = Series[1, 2, 3, 4, 2, 3]
-  #   series.freq # => { 1=>1, 2=>2, 3=>2, 4=>1}
+  #   series.frequency # => { 1=>1, 2=>2, 3=>2, 4=>1}
   #   series.mean # => 2.5
   #
   class Series < Array
@@ -46,7 +46,7 @@ module TealToad
     #
     # @example
     #   series = Series[1, 2, 3, 4, 2, 3]
-    #   series.freq # => { 1=>1, 2=>2, 3=>2, 4=>1}
+    #   series.frequency # => { 1=>1, 2=>2, 3=>2, 4=>1}
     #
     # @return [Hash] An hash with the Series distinct items as keys and their count as the values.
     #
@@ -63,8 +63,8 @@ module TealToad
     # @example
     #   series = Series[1, 2, 3, 4, 2, 3]
     #   series.probability(3) # => 2/6
-    #   series.probability(3, 1) # => 3/10
-    #   series.probability(-2, 1) # => 1/10
+    #   series.probability(3, smoothing_factor: 1) # => 3/10
+    #   series.probability(-2, smoothing_factor: 1) # => 1/10
     #
     # @param value [BasicObject] Finding probability of this value.
     # @param smoothing_factor [Numeric] Smoothing factor used in Laplace smoothing.
@@ -75,9 +75,14 @@ module TealToad
       Rational(count(value) + smoothing_factor, size + (uniq.size * smoothing_factor))
     end
 
-    alias freq frequency
-    alias average mean
-    alias avg mean
-    alias prob probability
+    ##
+    # @return [Float] Shannon entropy of the Series.
+    #
+    def entropy
+      - frequency.values.inject(0) do |acc, count|
+        prob = Rational(count, size)
+        acc + (prob * Math.log2(prob))
+      end
+    end
   end
 end

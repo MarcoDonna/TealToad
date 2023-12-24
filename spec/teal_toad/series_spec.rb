@@ -29,6 +29,16 @@ describe TealToad::Series do
     end
   end
 
+  describe '#range' do
+    it 'returns a Range' do
+      expect(series.range).to be_a(Range)
+    end
+
+    it 'returns a Range between the lowest and highest value in the Series' do
+      expect(series.range).to eq(1..4)
+    end
+  end
+
   describe '#probability' do
     it 'returns the probability of the given value in the Series' do
       expect(series.probability(3)).to eq(Rational(2, 6))

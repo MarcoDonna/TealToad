@@ -57,6 +57,17 @@ module TealToad
     end
 
     ##
+    # @return [Range] like min..max
+    #
+    # @example
+    #   series = Series[1, 2, 3, 4, 2, 3]
+    #   series.range # => 1..4
+    #
+    def range
+      Range.new(min, max)
+    end
+
+    ##
     # Returns the probability of the given value in the Series.
     # If smoothing_factor is passed, the probability returned is computed using Laplace smoothing.
     #

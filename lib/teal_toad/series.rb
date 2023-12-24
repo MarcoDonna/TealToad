@@ -68,6 +68,21 @@ module TealToad
     end
 
     ##
+    # @return [Rational] the Variance of the Series
+    #
+    def variance
+      mean_value = mean
+      Rational(inject(0) { |acc, value| acc + ((value - mean_value)**2) }, size)
+    end
+
+    ##
+    # @return [Float] the Standard Deviation of the Series
+    #
+    def standard_deviation
+      Math.sqrt(variance)
+    end
+
+    ##
     # Returns the probability of the given value in the Series.
     # If smoothing_factor is passed, the probability returned is computed using Laplace smoothing.
     #

@@ -39,6 +39,18 @@ describe TealToad::Series do
     end
   end
 
+  describe '#variance' do
+    it 'returns the Variance of the Series' do
+      expect(series.variance).to eq(Rational(5.5, 6))
+    end
+  end
+
+  describe '#standard_deviation' do
+    it 'returns the Standard Deviation of the Series' do
+      expect(series.standard_deviation).to eq(Math.sqrt(Rational(5.5, 6)))
+    end
+  end
+
   describe '#probability' do
     it 'returns the probability of the given value in the Series' do
       expect(series.probability(3)).to eq(Rational(2, 6))

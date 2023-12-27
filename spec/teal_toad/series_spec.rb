@@ -70,4 +70,10 @@ describe TealToad::Series do
       expect(series.entropy).to eq(1.9182958340544893)
     end
   end
+
+  describe '#gini_index' do
+    it 'returns Gini index of the Series' do
+      expect(series.gini_index).to eq(Rational(13, 18))
+    end
+  end
 end

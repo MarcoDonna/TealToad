@@ -110,5 +110,14 @@ module TealToad
         acc + (prob * Math.log2(prob))
       end
     end
+
+    ##
+    # @return [Float] Gini index of the Series
+    #
+    def gini_index
+      1 - frequency.values.inject(0) do |acc, count|
+        acc + Rational(count, size)**2
+      end
+    end
   end
 end

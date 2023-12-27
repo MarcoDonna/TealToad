@@ -65,6 +65,20 @@ describe TealToad::Series do
     end
   end
 
+  describe '#percentile' do
+    it 'returns the value given the percentile' do
+      expect(series.percentile(0.7)).to eq(3)
+    end
+
+    it 'returns the value if the percentile is expressend in 100' do
+      expect(series.percentile(25)).to eq(2)
+    end
+
+    it 'returns the median if the percentile is 0.5' do
+      expect(series.percentile(0.5)).to eq(2.5)
+    end
+  end
+
   describe '#entropy' do
     it 'returns Shannon entropy of the Series' do
       expect(series.entropy).to eq(1.9182958340544893)

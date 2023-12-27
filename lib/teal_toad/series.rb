@@ -95,10 +95,36 @@ module TealToad
     # @param value [BasicObject] Finding probability of this value.
     # @param smoothing_factor [Numeric] Smoothing factor used in Laplace smoothing.
     #
-    # @return [Rational] The computed probability
+    # @return [Rational] The computed probability.
     #
     def probability(value, smoothing_factor: 0)
       Rational(count(value) + smoothing_factor, size + (uniq.size * smoothing_factor))
+    end
+
+    ##
+    # Returns the percentile of the Series.
+    #
+    # @example
+    #   series = Series[1, 2, 3, 4, 2, 3]
+    #   series.percentile(0.7) # => 3, 70% of the values in the Series are below 3
+    #
+    # @param percentile [Numeric | Float] the N percentile.
+    #
+    # @return [Numeric] percentile% of the values in the Series are below this returned value.
+    #
+    def percentile(percentile)
+      percentile /= 100.0 if percentile > 1
+
+      position = percentile * (size - 1)
+
+      sorted_series = sort
+
+      lower_value = sorted_series[position.floor]
+      upper_value = sorted_series[position.ceil]
+      lower_weight = position.ceil - position
+      upper_weight = 1 - lower_weight
+
+      ((lower_value * upper_weight) + (upper_value * lower_weight)).to_f
     end
 
     ##
@@ -116,7 +142,7 @@ module TealToad
     #
     def gini_index
       1 - frequency.values.inject(0) do |acc, count|
-        acc + Rational(count, size)**2
+        acc + (Rational(count, size)**2)
       end
     end
   end
